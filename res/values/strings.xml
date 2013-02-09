@@ -21,5 +21,6 @@
     <string name="wgn">What\'s going on?</string>
     <string name="post">Post</string>
     <string name="bio">Bio:</string>
+    <string name="regerror">There Was An Error In Registering, are you sure all the fields are completed?</string>
 
 </resources>
