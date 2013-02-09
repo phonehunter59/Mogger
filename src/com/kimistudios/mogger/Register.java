@@ -2,18 +2,15 @@ package com.kimistudios.mogger;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import com.example.androidhive.library.DatabaseHandler;
-import com.example.androidhive.library.UserFunctions;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import com.kimistudios.mogger.DataBaseHandler;
+import com.kimistudios.mogger.UserFunctions;
 
 public class Register extends Activity {
 	Button btnRegister;
@@ -25,8 +22,6 @@ public class Register extends Activity {
 	
 	// JSON Response node names
 	private static String KEY_SUCCESS = "success";
-	private static String KEY_ERROR = "error";
-	private static String KEY_ERROR_MSG = "error_msg";
 	private static String KEY_UID = "uid";
 	private static String KEY_NAME = "name";
 	private static String KEY_EMAIL = "email";
@@ -59,7 +54,7 @@ public class Register extends Activity {
 						if(Integer.parseInt(res) == 1){
 							// user successfully registred
 							// Store user details in SQLite Database
-							DatabaseHandler db = new DatabaseHandler(getApplicationContext());
+							DataBaseHandler db = new DataBaseHandler(getApplicationContext());
 							JSONObject json_user = json.getJSONObject("user");
 							
 							// Clear all previous data in database
