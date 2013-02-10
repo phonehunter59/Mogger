@@ -20,7 +20,6 @@ public class Register extends Activity {
     Button btnRegister;
     Button btnLinkToLogin;
     EditText inputFullName;
-    EditText inputUsername;
     EditText inputEmail;
     EditText inputPassword;
     TextView registerErrorMsg;
@@ -51,7 +50,6 @@ public class Register extends Activity {
         inputFullName = (EditText) findViewById(R.id.editText1);
         inputEmail = (EditText) findViewById(R.id.editText2);
         inputPassword = (EditText) findViewById(R.id.editText4);
-        inputUsername = (EditText) findViewById(R.id.editText3);
         btnRegister = (Button) findViewById(R.id.button1);
         btnLinkToLogin = (Button) findViewById(R.id.button2);
         registerErrorMsg = (TextView) findViewById(R.id.regerror);
