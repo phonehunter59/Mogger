@@ -1,206 +1,102 @@
 package com.kimistudios.mogger;
  
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+ 
+import com.kimistudios.mogger.DatabaseHandler;
+import com.kimistudios.mogger.UserFunctions;
+ 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
-import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
-
-import com.kimistudios.mogger.DatabaseAdapter;
-/**
- * Handles the user registration activity.
- * 
- */
+import android.widget.TextView;
+ 
 public class Register extends Activity {
-	private EditText newUsername;
-	private EditText newPassword;
-	private EditText newConfiPass;
-	private Button registerButton;
-	private Button clearButton;
-	private Button backButton;
-
-	private DatabaseAdapter dbHelper;
-
-	 @Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-
-        SharedPreferences settings = getSharedPreferences(Login.MY_PREFS, 0);
-        Editor editor = settings.edit();
-        editor.putLong("uid", 0);
-        editor.commit();
-        
-        dbHelper = new DatabaseAdapter(this);
-        dbHelper.open();
+    Button btnRegister;
+    Button btnLinkToLogin;
+    EditText inputFullName;
+    EditText inputEmail;
+    EditText inputPassword;
+    TextView registerErrorMsg;
+ 
+    // JSON Response node names
+    private static String KEY_SUCCESS = "success";
+    private static String KEY_ERROR = "error";
+    private static String KEY_ERROR_MSG = "error_msg";
+    private static String KEY_UID = "uid";
+    private static String KEY_NAME = "name";
+    private static String KEY_EMAIL = "email";
+    private static String KEY_CREATED_AT = "created_at";
+ 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        initControls();
-	    }
-
-	 /**
-	  * Handles interface controls.
-	 */
-	 private void initControls()
-	    {
-		 	newUsername = (EditText) findViewById(R.id.editText1);
-		 	newPassword = (EditText) findViewById(R.id.editText4);
-		 	newConfiPass = (EditText) findViewById(R.id.editText2);
-		 	registerButton = (Button) findViewById(R.id.button1);
-		 	clearButton = (Button) findViewById(R.id.button4);
-		 	backButton = (Button) findViewById(R.id.button3);
-
-		 	registerButton.setOnClickListener(new Button.OnClickListener() { 
-		 		public void onClick (View v){ 
-		 			RegisterMe(v); }});
-
-		 	clearButton.setOnClickListener(new Button.OnClickListener() { 
-	    		public void onClick (View v){ 
-	    			ClearForm(); }});
-
-		 	backButton.setOnClickListener(new Button.OnClickListener() { 
-	    		public void onClick (View v){ 
-	    			BackToLogin(); }});
-	    }
-
-	 /**
-     * Clears the registration fields.
-     */
-	 private void ClearForm()
-	    {
-	    	saveLoggedInUId(0, "", "");
-	    	newUsername.setText("");
-	    	newPassword.setText("");
-	    	newConfiPass.setText("");
-	    }
-
-	 /**
-	  * Takes user back to login.
-	  */
-	  private void BackToLogin()
-	    {
-	    	finish();
-	    }
-
-	  /**
-	   * Handles the registration process.
-	   * @param v
-	   */
-	 private void RegisterMe(View v)
-	    {
-		 	//Get user details. 
-	    	String username = newUsername.getText().toString();
-	    	String password = newPassword.getText().toString();
-	    	String confirmpassword = newConfiPass.getText().toString();
-
-	    	//Check if all fields have been completed.
-	    	if (username.equals("") || password.equals("")){
-	    		Toast.makeText(getApplicationContext(), 
-	    				"Please ensure all fields have been completed.",
-				          Toast.LENGTH_SHORT).show();
-	  		return;
-	    	}
-
-	    	//Check password match. 
-	    	if (!password.equals(confirmpassword)) {
-	    		Toast.makeText(getApplicationContext(), 
-	    				"The password does not match.",
-				          	Toast.LENGTH_SHORT).show();
-	    					newPassword.setText("");
-	    					newConfiPass.setText("");
-	    		return;
-	    	}
-
-	    	//Encrypt password with MD5.
-	    	password = md5(password);
-
-	    	//Check database for existing users.
-	    	Cursor user = dbHelper.fetchUser(username, password);
-	    	if (user == null) {
-	    		Toast.makeText(getApplicationContext(), "Database query error",
-				          Toast.LENGTH_SHORT).show();
-	    	} else {
-	    		startManagingCursor(user);
-
-	    		//Check for duplicate usernames
-	    		if (user.getCount() > 0) {
-	    			Toast.makeText(getApplicationContext(), "The username is already registered",
-	  			          Toast.LENGTH_SHORT).show();
-	    			stopManagingCursor(user);
-	        		user.close();
-	    			return;
-	    		}
-	    		stopManagingCursor(user);
-	    		user.close();
-	    		user = dbHelper.fetchUser(username, password);
-	        	if (user == null) {
-	        		Toast.makeText(getApplicationContext(), "Database query error",
-	  			          Toast.LENGTH_SHORT).show();
-	        		return;
-	        	} else {
-	        		startManagingCursor(user);
-
-	        		if (user.getCount() > 0) {
-	        			Toast.makeText(getApplicationContext(), "The username is already registered",
-	        			          Toast.LENGTH_SHORT).show();
-	        			stopManagingCursor(user);
-	            		user.close();
-	        			return;
-	        		}
-	        		stopManagingCursor(user);
-	        		user.close();
-	        	}
-	        	//Create the new username.
-	    		long id = dbHelper.createUser(username, password);
-	    		if (id > 0) {
-	    			Toast.makeText(getApplicationContext(), "Your username was created",
-	    			          Toast.LENGTH_SHORT).show();
-	    			saveLoggedInUId(id, username, newPassword.getText().toString());
-	    			Intent i = new Intent(v.getContext(), Profile.class);
-		    		startActivity(i);
-
-		    		finish();
-	    		} else {
-	    			Toast.makeText(getApplicationContext(), "Failt to create new username",
-	    			          Toast.LENGTH_SHORT).show();
-	    		}
-	    	}
-	    }
-
-	 private void saveLoggedInUId(long id, String username, String password) {
-			SharedPreferences settings = getSharedPreferences(Login.MY_PREFS, 0);
-			Editor editor = settings.edit();
-			editor.putLong("uid", id);
-			editor.putString("username", username);
-			editor.putString("password", password);
-			editor.commit();
-	}
-	/**
-	 * Hashes the password with MD5.  
-	 * @param s
-	 * @return
-	 */
-	private String md5(String s) {
-	    try {
-
-	        MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
-	        digest.update(s.getBytes());
-	        byte messageDigest[] = digest.digest();
-
-
-	        StringBuffer hexString = new StringBuffer();
-	        for (int i=0; i<messageDigest.length; i++)
-	            hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
-	        return hexString.toString();
-
-	    } catch (NoSuchAlgorithmException e) {
-	        return s;
-	    }
-	}
+ 
+        // Importing all assets like buttons, text fields
+        inputFullName = (EditText) findViewById(R.id.firstlast);
+        inputEmail = (EditText) findViewById(R.id.email);
+        inputPassword = (EditText) findViewById(R.id.pass);
+        btnRegister = (Button) findViewById(R.id.regsubmit);
+        btnLinkToLogin = (Button) findViewById(R.id.reglogin);
+        registerErrorMsg = (TextView) findViewById(R.id.regerror);
+ 
+        // Register Button Click event
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                String name = inputFullName.getText().toString();
+                String email = inputEmail.getText().toString();
+                String password = inputPassword.getText().toString();
+                UserFunctions userFunction = new UserFunctions();
+                JSONObject json = userFunction.registerUser(name, email, password);
+ 
+                // check for login response
+                try {
+                    if (json.getString(KEY_SUCCESS) != null) {
+                        registerErrorMsg.setText("");
+                        String res = json.getString(KEY_SUCCESS);
+                        if(Integer.parseInt(res) == 1){
+                            // user successfully registred
+                            // Store user details in SQLite Database
+                            DatabaseHandler db = new DatabaseHandler(getApplicationContext());
+                            JSONObject json_user = json.getJSONObject("user");
+ 
+                            // Clear all previous data in database
+                            userFunction.logoutUser(getApplicationContext());
+                            db.addUser(json_user.getString(KEY_NAME), json_user.getString(KEY_EMAIL), json.getString(KEY_UID), json_user.getString(KEY_CREATED_AT));
+                            // Launch Dashboard Screen
+                            Intent dashboard = new Intent(getApplicationContext(), Profile.class);
+                            // Close all views before launching Dashboard
+                            dashboard.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(dashboard);
+                            // Close Registration Screen
+                            finish();
+                        }else{
+                            // Error in registration
+                            registerErrorMsg.setText("Error occured in registration");
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+ 
+        // Link to Login Screen
+        btnLinkToLogin.setOnClickListener(new View.OnClickListener() {
+ 
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(),
+                        Login.class);
+                startActivity(i);
+                // Close Registration View
+                finish();
+            }
+        });
+    }
 }
