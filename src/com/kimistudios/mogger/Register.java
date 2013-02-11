@@ -69,7 +69,7 @@ public class Register extends Activity {
                         registerErrorMsg.setText("");
                         String res = json.getString(KEY_SUCCESS);
                         if(Integer.parseInt(res) == 1){
-                            // user successfully registred
+                            // user successfully registered
                             // Store user details in SQLite Database
                             DataBaseHandler db = new DataBaseHandler(getApplicationContext());
                             JSONObject json_user = json.getJSONObject("user");
@@ -78,10 +78,10 @@ public class Register extends Activity {
                             userFunction.logoutUser(getApplicationContext());
                             db.addUser(json_user.getString(KEY_NAME), json_user.getString(KEY_EMAIL), json.getString(KEY_UID), json_user.getString(KEY_CREATED_AT));
                             // Launch Dashboard Screen
-                            Intent dashboard = new Intent(getApplicationContext(), MainActivity.class);
+                            Intent Profile = new Intent(getApplicationContext(), MainActivity.class);
                             // Close all views before launching Dashboard
-                            dashboard.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(dashboard);
+                            Profile.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(Profile);
                             // Close Registration Screen
                             finish();
                         }else{
