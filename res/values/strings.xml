@@ -22,5 +22,8 @@
     <string name="post">Post</string>
     <string name="bio">Bio:</string>
     <string name="regerror">There Was An Error In Registering, are you sure all the fields are completed?</string>
+    <string name="conpass">Confirm Password</string>
+    <string name="back">Back</string>
+    <string name="clear">Clear</string>
 
 </resources>

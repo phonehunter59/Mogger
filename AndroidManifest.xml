@@ -22,9 +22,8 @@
         <activity android:name="Register"></activity>
         <activity android:name="Profile"></activity>
         <activity android:name="Upload"></activity>
-        <activity android:name="DataBaseHandler"></activity>
-        <activity android:name="UserFunctions"></activity>
-        <activity android:name="JSONParser"></activity>
+        <activity android:name="DatabaseAdapter"></activity>
+        <activity android:name="DatabaseHelper"></activity>
     </application>
 
 </manifest>
