@@ -49,7 +49,7 @@ public class Login extends Activity {
         dbHelper = new DatabaseAdapter(this);
         dbHelper.open();
         
-        setContentView(R.layout.main);
+        setContentView(R.layout.activity_main);
         initControls();
     }
     
@@ -59,9 +59,9 @@ public class Login extends Activity {
     	thePassword = (EditText) findViewById(R.id.pass);
     	loginButton = (Button) findViewById(R.id.loginsub);
     	registerButton = (Button) findViewById(R.id.buttonreg);
-    	clearButton = (Button) findViewById(R.id.Clear);
-    	exitButton = (Button) findViewById(R.id.Exit);
-    	rememberDetails = (CheckBox) findViewById(R.id.RememberMe);
+    	clearButton = (Button) findViewById(R.id.clear1);
+    	exitButton = (Button) findViewById(R.id.exit);
+    	rememberDetails = (CheckBox) findViewById(R.id.checkBox1);
     	
     	//Create touch listeners for all buttons.
     	loginButton.setOnClickListener(new Button.OnClickListener(){
@@ -155,7 +155,7 @@ public class Login extends Activity {
     			saveLoggedInUId(theUser.getLong(theUser.getColumnIndex(DatabaseAdapter.COL_ID)), thisUsername, thePassword.getText().toString());
     		    stopManagingCursor(theUser);
     		    theUser.close();
-    		    Intent i = new Intent(v.getContext(), Helloworld.class);
+    		    Intent i = new Intent(v.getContext(), Profile.class);
     		    startActivity(i);
     		}
     		

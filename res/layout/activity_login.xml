@@ -56,4 +56,30 @@
         android:layout_alignParentTop="true"
         android:text="@string/Register" />
 
+    <CheckBox
+        android:id="@+id/checkBox1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/loginsub"
+        android:layout_below="@+id/pass"
+        android:text="@string/remember" />
+
+    <Button
+        android:id="@+id/clear1"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="@string/clear" />
+
+    <Button
+        android:id="@+id/exit"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/exit" />
+
 </RelativeLayout>

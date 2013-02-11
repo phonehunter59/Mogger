@@ -25,5 +25,7 @@
     <string name="conpass">Confirm Password</string>
     <string name="back">Back</string>
     <string name="clear">Clear</string>
+    <string name="remember">Remember Me</string>
+    <string name="exit">Exit</string>
 
 </resources>
