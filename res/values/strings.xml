@@ -28,5 +28,6 @@
     <string name="remember">Remember Me</string>
     <string name="exit">Exit</string>
     <string name="logerror">There was a problem logging in. Make sure your email and password are correct</string>
+    <string name="welcome">WELCOME</string>
 
 </resources>

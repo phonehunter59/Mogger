@@ -18,15 +18,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="Login"></activity>
-        <activity android:name="Register"></activity>
-        <activity android:name="Profile"></activity>
-        <activity android:name="Upload"></activity>
-        <activity android:name="DatabaseAdapter"></activity>
-        <activity android:name="DatabaseHelper"></activity>
-        <activity android:name="JSONParser"></activity>
-        <activity android:name="DatabaseHandler"></activity>
-        <activity android:name="UserFunctions"></activity>
+        <activity android:name="library.DataBaseHandler"></activity>
+        <activity android:name="library.JSONParser"></activity>
+        <activity android:name="library.UserFunctions"></activity>
+        <activity android:name="LoginTask"></activity>
+        <activity android:name="RegisterTask"></activity>
+        <activity android:name="LoginActivity"></activity>
+        <activity android:name="RegisterActivity"></activity>
+        <activity android:name="Dashboard"></activity>
     </application>
 
 </manifest>

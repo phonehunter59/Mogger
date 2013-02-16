@@ -1,12 +1,18 @@
-package com.kimistudios.mogger;
+package library;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
+import org.apache.http.NameValuePair;
+import org.json.JSONArray;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
  
 public class DatabaseHandler extends SQLiteOpenHelper {
  
@@ -15,7 +21,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
  
     // Database Name
-    private static final String DATABASE_NAME = "u334803132_mogger";
+    private static final String DATABASE_NAME = "android_api";
  
     // Login table name
     private static final String TABLE_LOGIN = "login";
@@ -23,7 +29,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // Login Table Columns names
     private static final String KEY_ID = "id";
     private static final String KEY_NAME = "name";
-    private static final String KEY_EMAIL = "email";
+    public static final String KEY_EMAIL = "email";
     private static final String KEY_UID = "uid";
     private static final String KEY_CREATED_AT = "created_at";
  
@@ -69,6 +75,23 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.insert(TABLE_LOGIN, null, values);
         db.close(); // Closing database connection
     }
+    
+    public void addUser(String email) {
+        SQLiteDatabase db = this.getWritableDatabase();
+ 
+        ContentValues values = new ContentValues();
+        values.put(KEY_EMAIL, email); // Email
+ 
+        // Inserting Row
+        db.insert(TABLE_LOGIN, null, values);
+        db.close(); // Closing database connection
+    }
+    
+    public NameValuePair getUser() {
+    	List<NameValuePair> params = new ArrayList<NameValuePair>();
+    	//params.add(new BasicNameValuePair("email"))
+    	return null;    	
+    }
  
     /**
      * Getting user data from database
@@ -107,6 +130,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
  
         // return row count
         return rowCount;
+    }
+    
+    public String returnRows() {
+    	String response = "";
+    	String countQuery = "SELECT * FROM " + TABLE_LOGIN;
+    	SQLiteDatabase db = this.getReadableDatabase();
+    	for (int j = 0; j < getRowCount(); j++) {
+    		Cursor cursor = db.rawQuery(countQuery, null);
+    		response += cursor.getColumnName(j);
+    	}
+    	Log.v("LT", response);
+    	return response;
     }
  
     /**

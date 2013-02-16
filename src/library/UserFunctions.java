@@ -1,54 +1,47 @@
-package com.kimistudios.mogger;
+package library;
 
 import java.util.ArrayList;
 import java.util.List;
  
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
  
 import android.content.Context;
+import android.util.Log;
  
 public class UserFunctions {
  
     private JSONParser jsonParser;
  
-    // Testing in localhost using wamp or xampp
-    // use http://10.0.2.2/ to connect to your localhost ie http://localhost/
-    private static String loginURL = "http://stmgang.com/app/android_login_api/";
-    private static String registerURL = "http://stmgang.com/app/android_login_api/";
- 
+    private static String loginURL = "http://stmgang.com/android_api/";
+    private static String registerURL = "http://stmgang.com/android_api/"; 
+
     private static String login_tag = "login";
     private static String register_tag = "register";
+    private static String question_tag = "question";
  
     // constructor
     public UserFunctions(){
         jsonParser = new JSONParser();
     }
- 
-    /**
-     * function make Login Request
-     * @param email
-     * @param password
-     * */
+    
+     //login with user provided email/pass
     public JSONObject loginUser(String email, String password){
         // Building Parameters
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("tag", login_tag));
         params.add(new BasicNameValuePair("email", email));
         params.add(new BasicNameValuePair("password", password));
+        //Log.v("userfunctions", "loginuser");
         JSONObject json = jsonParser.getJSONFromUrl(loginURL, params);
         // return json
-        // Log.e("JSON", json.toString());
         return json;
     }
  
-    /**
-     * function make Login Request
-     * @param name
-     * @param email
-     * @param password
-     * */
+    //register a new user with name/email/pass
     public JSONObject registerUser(String name, String email, String password){
         // Building Parameters
         List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -63,9 +56,7 @@ public class UserFunctions {
         return json;
     }
  
-    /**
-     * Function get Login status
-     * */
+    //determine if the user is logged in
     public boolean isUserLoggedIn(Context context){
         DatabaseHandler db = new DatabaseHandler(context);
         int count = db.getRowCount();
@@ -76,14 +67,10 @@ public class UserFunctions {
         return false;
     }
  
-    /**
-     * Function to logout user
-     * Reset Database
-     * */
+    //logout the user
     public boolean logoutUser(Context context){
         DatabaseHandler db = new DatabaseHandler(context);
         db.resetTables();
         return true;
     }
- 
 }
