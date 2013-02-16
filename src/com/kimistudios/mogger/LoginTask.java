@@ -37,8 +37,8 @@ public class LoginTask extends AsyncTask<String, Void, Integer> {
 	private LoginActivity activity;
 	private int id = -1;
 	private JSONParser jsonParser;
-	private static String loginURL = "http://stmgang.com/android_api/";
-	private static String registerURL = "http://stmgang.com/android_api/";
+	private static String loginURL = "http://stmgang.com/app/android_api/";
+	private static String registerURL = "http://stmgang.com/app/android_api/";
 	private static String KEY_SUCCESS = "success";
 	private static String KEY_ERROR = "error";
 	private static String KEY_ERROR_MSG = "error_msg";

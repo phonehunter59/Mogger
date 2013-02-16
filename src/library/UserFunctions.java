@@ -16,8 +16,8 @@ public class UserFunctions {
  
     private JSONParser jsonParser;
  
-    private static String loginURL = "http://stmgang.com/android_api/";
-    private static String registerURL = "http://stmgang.com/android_api/"; 
+    private static String loginURL = "http://stmgang.com/app/android_api/";
+    private static String registerURL = "http://stmgang.com/app/android_api/"; 
 
     private static String login_tag = "login";
     private static String register_tag = "register";
