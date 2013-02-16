@@ -18,7 +18,7 @@ public class MainActivity extends Activity {
         mainNext.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 Intent i = new Intent();
-                i.setClassName("com.kimistudios.mogger", "com.kimistudios.mogger.Login");
+                i.setClassName("com.kimistudios.mogger", "com.kimistudios.mogger.LoginActivity");
                 startActivity(i);
             }
         });
@@ -26,7 +26,7 @@ public class MainActivity extends Activity {
         mainNext1.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 Intent i = new Intent();
-                i.setClassName("com.kimistudios.mogger", "com.kimistudios.mogger.Register");
+                i.setClassName("com.kimistudios.mogger", "com.kimistudios.mogger.RegisterActivity");
                 startActivity(i);
             }
         });
