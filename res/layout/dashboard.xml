@@ -16,6 +16,24 @@
          android:text="@string/welcome"
          android:textColor="#FF0000"
          android:textSize="50sp" />
-         
+
+     <Button
+         android:id="@+id/btnlogout"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentRight="true"
+         android:layout_below="@+id/welcome"
+         android:layout_marginTop="52dp"
+         android:text="@string/logout" />
+
+     <TextView
+         android:id="@+id/emailtextview"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentLeft="true"
+         android:layout_alignParentRight="true"
+         android:layout_below="@+id/btnlogout"
+         android:textColor="#FF0000"
+         android:textSize="50sp" />
 
 </RelativeLayout>

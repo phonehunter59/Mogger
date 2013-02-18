@@ -23,15 +23,17 @@ public final class R {
         public static final int Login=0x7f080008;
         public static final int Register=0x7f080007;
         public static final int RelativeLayout1=0x7f080000;
+        public static final int btnlogout=0x7f080010;
         public static final int buttonreg=0x7f080002;
         public static final int email=0x7f08000d;
+        public static final int emailtextview=0x7f080011;
         public static final int firstlast=0x7f08000c;
         public static final int imageView1=0x7f080001;
         public static final int logemail=0x7f080003;
         public static final int login_error=0x7f080006;
         public static final int loginsub=0x7f080005;
         public static final int logpass=0x7f080004;
-        public static final int menu_settings=0x7f080010;
+        public static final int menu_settings=0x7f080012;
         public static final int pass=0x7f08000e;
         public static final int regerror=0x7f08000a;
         public static final int reglogin=0x7f080009;
@@ -66,6 +68,7 @@ public final class R {
         public static final int exit=0x7f050019;
         public static final int hello_world=0x7f050001;
         public static final int logerror=0x7f05001a;
+        public static final int logout=0x7f05001c;
         public static final int menu_settings=0x7f050002;
         public static final int nothing=0x7f05000c;
         public static final int post=0x7f050012;
